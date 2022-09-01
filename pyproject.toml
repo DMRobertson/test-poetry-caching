@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "test-poetry-caching"
+version = "0.1.0"
+description = ""
+authors = ["David Robertson <davidr@element.io>"]
+readme = "README.md"
+packages = [{include = "test_poetry_caching"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+requests = "^2.28.1"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^22.8.0"
+mypy = "^0.971"
+isort = "^5.10.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
