@@ -20,6 +20,7 @@ jobs:
        run: "test -f poetry.lock || (echo No lock file! && false)"
 
      - uses: actions/setup-python@v4
+       id: setup-python
        with:
          python-version: "3.x"
 
