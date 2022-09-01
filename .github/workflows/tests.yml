@@ -15,13 +15,14 @@ jobs:
    runs-on: ubuntu-latest
    steps:
      - uses: actions/checkout@v2
+
+     - name: Check poetry lockfile exists
+       run: "test -f poetry.lock || (echo No lock file! && false)"
+       shell: bash
+
      - uses: actions/setup-python@v4
        with:
          python-version: "3.x"
-
-     - name: Check for poetry lock
-       run: "test -f poetry.lock || (echo No lock file! && false)"
-       shell: bash
 
 #     - name: Restore/cache poetry installation
 #       id: poetry-install-cache
@@ -32,7 +33,7 @@ jobs:
 
      - name: Install poetry from scratch
 #       if: "${{ steps.poetry-install-cache.outputs.cache-hit != 'true' }}"
-       run: pipx install poetry==${{ inputs.poetry-version }}
+       run: pipx install poetry==1.2.0
        shell: bash
 
      # Poetry manages a virtualenv for us. We're going to cache that too.
