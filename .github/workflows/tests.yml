@@ -32,7 +32,7 @@ jobs:
        id: poetry-install-cache
        uses: actions/cache@v3
        with:
-         path: ${{ steps.poetry-installation-base.outputs.dir }}
+         path: ${{ steps.poetry-installation.outputs.dir }}
          key: poetry-install-cache-${{ steps.setup-python.outputs.python-version }}-${{ inputs.poetry-version }}
 
      - name: Install poetry from scratch
