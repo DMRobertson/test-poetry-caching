@@ -24,15 +24,19 @@ jobs:
        with:
          python-version: "3.x"
 
-#     - name: Restore/cache poetry installation
-#       id: poetry-install-cache
-#       uses: actions/cache@v2
-#       with:
-#         path: ${{ steps.site-user-base.outputs.dir }}
-#         key: poetry-install-cache-${{ steps.setup-python.outputs.python-version }}-${{ inputs.poetry-version }}
+     - name: Determine poetry installation location
+       id: poetry-installation
+       run: echo "::set-output name=dir::$(pipx environment --value PIPX_LOCAL_VENVS)/poetry"
+
+     - name: Restore/cache poetry installation
+       id: poetry-install-cache
+       uses: actions/cache@v3
+       with:
+         path: ${{ steps.poetry-installation-base.outputs.dir }}
+         key: poetry-install-cache-${{ steps.setup-python.outputs.python-version }}-${{ inputs.poetry-version }}
 
      - name: Install poetry from scratch
-#       if: "${{ steps.poetry-install-cache.outputs.cache-hit != 'true' }}"
+       if: "${{ steps.poetry-install-cache.outputs.cache-hit != 'true' }}"
        run: pipx install poetry==1.2.0
        shell: bash
 
