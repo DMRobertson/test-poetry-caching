@@ -27,7 +27,7 @@ jobs:
        id: pipx-dirs
        run: |
         echo "::set-output name=poetry::$(pipx environment --value PIPX_LOCAL_VENVS)/poetry"
-        echo "::set-output name=bin::$(pipx environment --value PIPX_BIN_DIR)"
+        echo "::set-output name=bin::$(pipx environment --value PIPX_BIN_DIR)"/poetry
 
      - name: Restore/cache poetry installation
        id: poetry-install-cache
