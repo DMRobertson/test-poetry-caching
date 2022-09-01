@@ -43,22 +43,21 @@ jobs:
        if: "${{ steps.poetry-install-cache.outputs.cache-hit != 'true' }}"
        run: pipx install poetry==1.2.0
 
-     # Poetry manages a virtualenv for us. We're going to cache that too.
-     # Again, we're following snok/install-poetry's README.
-#     - name: Locate poetry venv
-#       id: poetry-venvs
-#       run: echo "::set-output name=dir::$(python -m poetry config virtualenvs.path)"
-#       shell: bash
-#
-#     - name: Restore/cache poetry venv
-#       id: poetry-venv-cache
-#       uses: actions/cache@v2
-#       with:
-#         path: ${{ steps.poetry-venvs.outputs.dir }}
-#         key: poetry-venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}-${{ inputs.extras }}
-
      - name: Check that the poetry lockfile is up to date
        run: poetry lock --check
+
+     # Poetry manages a virtualenv for us. We're going to cache that too.
+     # Again, we're following snok/install-poetry's README.
+     - name: Locate poetry venv
+       id: poetry-venvs
+       run: echo "::set-output name=dir::$(poetry config virtualenvs.path)"
+
+     - name: Restore/cache poetry-managed venvs
+       id: poetry-venv-cache
+       uses: actions/cache@v4
+       with:
+         path: ${{ steps.poetry-venvs.outputs.dir }}
+         key: poetry-venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}-${{ inputs.extras }}
 
      - name: Install project
        run: poetry install --no-interaction
