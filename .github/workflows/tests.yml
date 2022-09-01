@@ -24,7 +24,7 @@ jobs:
          python-version: "3.x"
 
      - name: Determine poetry installation location
-       id: pipx-dors
+       id: pipx-dirs
        run: |
         echo "::set-output name=poetry::$(pipx environment --value PIPX_LOCAL_VENVS)/poetry"
         echo "::set-output name=bin::$(pipx environment --value PIPX_BIN_DIR)"
